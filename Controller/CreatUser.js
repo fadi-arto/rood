@@ -5,16 +5,11 @@ const userr = require('../entity/users')
 
 
 const createToken = async (id) => {
-    console.log('--------------------');
     console.log(id);
-    console.log('--------------------');
-
     try {
         const token = await jwt.sign({ id }, '465416', {
             expiresIn: 3600
         });
-        console.log('====');
-        console.log(token);
         return token;
     } catch (error) {
         console.error('Error creating token:', error);
@@ -22,28 +17,18 @@ const createToken = async (id) => {
     }
 };
 
-const handleErrors = (err) => { 
-    console.error(err);
+const handleErrors = (err) => {d
     return { message: 'An error occurred' };
 };
 
 module.exports.sighup_post = async (req, res) => {
-    console.log("in req");
-
     const { name, number, password } = req.body;
     try {
-        console.log("in try");
         const user = await userr.create({ name, number, password });
-        console.log("in create");
-        console.log(user._id);
         const token = await createToken(user._id);
-        console.log("token");
         res.cookie('jwt', token, { httpOnly: true, maxAge: 3600 });
         res.status(201).json({ user: user._id });
-        console.log("fadi");
-
     } catch (err) {
-        console.log("in error");
         const errors = handleErrors(err);
         res.status(400).json({ errors });
     }
@@ -52,11 +37,10 @@ module.exports.sighup_post = async (req, res) => {
 module.exports.login_post = async (req, res) => {
     const { name, number, password } = req.body;
     try {
-        const user = await userr.login(name, number, password); 
+        const user = await userr.login(name, number, password);
         const token = await createToken(user._id);
         res.cookie('jwt', token, { httpOnly: true, maxAge: 3600 });
         res.status(200).json({ user: user._id });
-        console.log("user is login")
     } catch (err) {
         const errors = handleErrors(err);
         res.status(400).json({ errors });
