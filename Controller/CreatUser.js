@@ -5,7 +5,6 @@ const userr = require('../entity/users')
 
 
 const createToken = async (id) => {
-    console.log(id);
     try {
         const token = await jwt.sign({ id }, '465416', {
             expiresIn: 3600
