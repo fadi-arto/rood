@@ -2,14 +2,7 @@ const jwt = require('jsonwebtoken');
 const user = require('../entity/users');
 
 
-const requaierauth = (req, res, next) => {
-    console.log('-----------');
-    console.log('-----------');
-    console.log('-----------');
-    console.log(req.session);
-    console.log('-----------');
-    console.log('-----------');
-    console.log('-----------');
+const requaierauth = (req , res, next) => {
     const token = req.cookies.jwt;
     if (token) {
         jwt.verify(token, '465416', (err, decodedToken) => {
@@ -45,5 +38,6 @@ const checkuser = (req, res, next) => {
         next();
     }
 };
+
 
 module.exports = { requaierauth, checkuser };

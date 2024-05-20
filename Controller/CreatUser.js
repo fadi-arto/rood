@@ -22,8 +22,7 @@ const createToken = async (id) => {
     }
 };
 
-const handleErrors = (err) => {
-    // قم بإضافة المنطق المناسب لمعالجة الأخطاء هنا
+const handleErrors = (err) => { 
     console.error(err);
     return { message: 'An error occurred' };
 };
@@ -57,6 +56,7 @@ module.exports.login_post = async (req, res) => {
         const token = await createToken(user._id);
         res.cookie('jwt', token, { httpOnly: true, maxAge: 3600 });
         res.status(200).json({ user: user._id });
+        console.log("user is login")
     } catch (err) {
         const errors = handleErrors(err);
         res.status(400).json({ errors });
@@ -70,17 +70,5 @@ module.exports.logout_get = (req, res) => {
 
 
 
-// const creatUser = (req, res) => {
-//     const data = req.body;
-//     addUsers(data, (err, result) => {
-//         if (err) {
-//             console.log("errors")
-//             console.log(err)
-//         }
-//         else {
-//             console.log("user is rejester")
-//             res.send(result)
-//         }
-//     })
-// }
+
 
